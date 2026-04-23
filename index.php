@@ -23,25 +23,46 @@
         </div>
         <hr />
 
-        <?php if (isset($_COOKIE["list_transaksi"])) { $list_transaksi =
+        <?php 
+        if (isset($_COOKIE["list_transaksi"])) { $list_transaksi =
         json_decode($_COOKIE["list_transaksi"], true); echo "
         <ul>
-            "; foreach ($list_transaksi as $key => $value) { echo "
-            <li>{$value["date"]} - Rp. {$value["nominal"]}</li>
+            "; 
+            $urut = "Tanggal";
+            if(isset($_COOKIE['set_urut'])) { 
+                $urut = $_COOKIE['set_urut'];
+            }
+                
+            $arah ="Ascending";
+            if(isset($_COOKIE['set_arah'])){
+                $arah = $_COOKIE['set_arah'];
+            }
+
+            usort($list_transaksi, function($a,$b) use ($urut,$arah){
+                if ($urut == "Tanggal"){
+                    $valA = strtotime($a["date"]);
+                    $valB = strtotime($b["date"]);
+                } else
+                {
+                    $valA = (int)$a["nominal"];
+                    $valB = (int)$b["nominal"];
+                }
+
+                if ($arah == "Ascending"){
+                    return $valA > $valB;
+                } else { 
+                    return $valA < $valB;
+                }
+            });
+            foreach ($list_transaksi as $key => $value)    
+            { 
+            $nominal_format = number_format($value["nominal"], 0, ".",",");
+            echo " 
+            <li>{$value["date"]} - Rp. {$nominal_format}</li>
             "; } echo "
         </ul>
         "; } else { echo "
         <p><i>Belum ada data</i></p>
         "; } ?>
-
-        <?php
-            //code untuk pengecekan saja apakah cookie sudah diset pada setting.php
-            if(isset($_COOKIE['set_urut'])){
-                echo "urutan sudah di set menjadi : ".$_COOKIE['set_urut']."<br>";
-            }
-            if(isset($_COOKIE['set_arah'])){
-                echo "arah sudah di set menjadi : ".$_COOKIE['set_arah'];
-            }
-        ?>
     </body>
 </html>

@@ -19,8 +19,8 @@
 
             // 2. Jika user menekan tombol submit, pakai data dari $_POST (data terbaru)
             if (isset($_POST['submit'])) {
-                $urutan = $_POST['urut'];
-                $arah = $_POST['arah'];
+                $urutan = isset($_POST['urut']) ? $_POST['urut'] : 'Tanggal';
+                $arah = isset($_POST['arah']) ? $_POST['arah'] : 'Ascending';
                 
                 setcookie('set_urut', $urutan, time() + 3600);
                 setcookie('set_arah', $arah, time() + 3600);
