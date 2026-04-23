@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Project WEBPROG</title>
 </head>
 <body>
     <?php if (isset($_POST["submit"])) {
@@ -18,7 +18,7 @@
 
         $list_transaksi[] = [
             "date" => $tanggal,
-            "nominal" => $nominal,
+            "nominal" => number_format($nominal, 0, ".", ","),
         ];
 
         $json_encode = json_encode($list_transaksi);

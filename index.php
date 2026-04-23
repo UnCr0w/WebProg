@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Homepage</title>
+        <title>Project WEBPROG</title>
         <style>
             a:link {
                 color: midnightblue;
@@ -33,5 +33,15 @@
         "; } else { echo "
         <p><i>Belum ada data</i></p>
         "; } ?>
+
+        <?php
+            //code untuk pengecekan saja apakah cookie sudah diset pada setting.php
+            if(isset($_COOKIE['set_urut'])){
+                echo "urutan sudah di set menjadi : ".$_COOKIE['set_urut']."<br>";
+            }
+            if(isset($_COOKIE['set_arah'])){
+                echo "arah sudah di set menjadi : ".$_COOKIE['set_arah'];
+            }
+        ?>
     </body>
 </html>
