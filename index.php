@@ -25,14 +25,39 @@
         </div>
         <hr />
 
-        <?php if (isset($_COOKIE["list_transaksi"])) {
-            $list_transaksi = json_decode($_COOKIE["list_transaksi"], true);
+        <?php if (isset($_COOKIE["transaksi"])) {
+            $transaksi = $_COOKIE["transaksi"];
+            $list_transaksi = explode("|", $transaksi);
+            $list_detail_transaksi = [];
+
+            foreach ($list_transaksi as $value) {
+                $detail_transaksi = explode(":", $value);
+                $list_detail_transaksi[$detail_transaksi[0]] =
+                    $detail_transaksi[1];
+            }
+
+            if (isset($_COOKIE["set_urut"]) && isset($_COOKIE["set_arah"])) {
+                if ($_COOKIE["set_urut"] == "Tanggal") {
+                    if ($_COOKIE["set_arah"] == "Ascending") {
+                        ksort($list_detail_transaksi);
+                    } elseif ($_COOKIE["set_arah"] == "Descending") {
+                        krsort($list_detail_transaksi);
+                    }
+                } elseif ($_COOKIE["set_urut"] == "Nominal") {
+                    if ($_COOKIE["set_arah"] == "Ascending") {
+                        asort($list_detail_transaksi);
+                    } elseif ($_COOKIE["set_arah"] == "Descending") {
+                        arsort($list_detail_transaksi);
+                    }
+                }
+            }
+
             echo "
         <ul>
             ";
-            foreach ($list_transaksi as $key => $value) {
+            foreach ($list_detail_transaksi as $key => $value) {
                 echo "
-            <li>{$value["date"]} - Rp. {$value["nominal"]}</li>
+            <li>{$key} - Rp. {$value}</li>
             ";
             }
             echo "
@@ -42,15 +67,6 @@
             echo "
         <p><i>Belum ada data</i></p>
         ";
-        } ?> <?php //code untuk pengecekan saja apakah cookie sudah diset pada setting.php
-
-
- if (isset($_COOKIE["set_urut"])) {
-     echo "urutan sudah diset menjadi : " . $_COOKIE["set_urut"] . "<br />";
- }
- if (isset($_COOKIE["set_arah"])) {
-     echo "arah sudah di set menjadi : " . $_COOKIE["set_arah"];
- }
- ?>
+        } ?>
     </body>
 </html>

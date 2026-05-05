@@ -1,24 +1,3 @@
-<?php if (isset($_POST["submit"])) {
-    $tanggal = $_POST["date"];
-    $nominal = $_POST["nominal"];
-
-    if (isset($_COOKIE["list_transaksi"])) {
-        $list_transaksi = json_decode($_COOKIE["list_transaksi"], true);
-    } else {
-        $list_transaksi = [];
-    }
-
-    $list_transaksi[] = [
-        "date" => $tanggal,
-        "nominal" => number_format($nominal, 0, ".", ","),
-    ];
-
-    $json_encode = json_encode($list_transaksi);
-    setcookie("list_transaksi", $json_encode, time() + 3600);
-    header("Location: tambah.php");
-    exit();
-} ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +19,24 @@
 </head>
 <body>
     <h1>Tambah Transaksi</h1>
-    <?php if (isset($_COOKIE["list_transaksi"])) {
-        echo "<p style=\"color: red;\" >Data berhasil ditambah</p>";
+    <?php if (isset($_POST["submit"])) {
+        $tanggal = $_POST["date"];
+        $nominal = $_POST["nominal"];
+
+        if ($tanggal != "" && $nominal != "") {
+            $list_transaksi = [];
+            if (isset($_COOKIE["transaksi"])) {
+                $transaksi = $_COOKIE["transaksi"];
+                $list_transaksi = explode("|", $transaksi);
+            }
+
+            $string_transaksi = $tanggal . ":" . $nominal;
+            array_push($list_transaksi, $string_transaksi);
+            $transaksi = implode("|", $list_transaksi);
+
+            setcookie("transaksi", $transaksi, time() + 3600);
+            echo "<p style=\"color: red;\" >Data berhasil ditambah</p>";
+        }
     } ?>
     <form method="post" action="tambah.php">
         Tanggal: <input type="date" name="date"> <br> <br>
