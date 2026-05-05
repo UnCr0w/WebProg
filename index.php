@@ -17,31 +17,40 @@
         </style>
     </head>
     <body>
-        <div style="display: flex" ;>
-            <div>[<a href="tambah.php">Tambah Transaksi</a>]</div>
-            <div>[<a href="setting.php">Setting</a>]</div>
+        <div>
+            [<a href="tambah.php">Tambah Transaksi</a>] &nbsp; &nbsp; [<a
+                href="setting.php"
+                >Setting</a
+            >]
         </div>
         <hr />
 
-        <?php if (isset($_COOKIE["list_transaksi"])) { $list_transaksi =
-        json_decode($_COOKIE["list_transaksi"], true); echo "
+        <?php if (isset($_COOKIE["list_transaksi"])) {
+            $list_transaksi = json_decode($_COOKIE["list_transaksi"], true);
+            echo "
         <ul>
-            "; foreach ($list_transaksi as $key => $value) { echo "
+            ";
+            foreach ($list_transaksi as $key => $value) {
+                echo "
             <li>{$value["date"]} - Rp. {$value["nominal"]}</li>
-            "; } echo "
+            ";
+            }
+            echo "
         </ul>
-        "; } else { echo "
+        ";
+        } else {
+            echo "
         <p><i>Belum ada data</i></p>
-        "; } ?>
+        ";
+        } ?> <?php //code untuk pengecekan saja apakah cookie sudah diset pada setting.php
 
-        <?php
-            //code untuk pengecekan saja apakah cookie sudah diset pada setting.php
-            if(isset($_COOKIE['set_urut'])){
-                echo "urutan sudah di set menjadi : ".$_COOKIE['set_urut']."<br>";
-            }
-            if(isset($_COOKIE['set_arah'])){
-                echo "arah sudah di set menjadi : ".$_COOKIE['set_arah'];
-            }
-        ?>
+
+ if (isset($_COOKIE["set_urut"])) {
+     echo "urutan sudah diset menjadi : " . $_COOKIE["set_urut"] . "<br />";
+ }
+ if (isset($_COOKIE["set_arah"])) {
+     echo "arah sudah di set menjadi : " . $_COOKIE["set_arah"];
+ }
+ ?>
     </body>
 </html>

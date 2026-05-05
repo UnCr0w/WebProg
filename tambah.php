@@ -1,3 +1,24 @@
+<?php if (isset($_POST["submit"])) {
+    $tanggal = $_POST["date"];
+    $nominal = $_POST["nominal"];
+
+    if (isset($_COOKIE["list_transaksi"])) {
+        $list_transaksi = json_decode($_COOKIE["list_transaksi"], true);
+    } else {
+        $list_transaksi = [];
+    }
+
+    $list_transaksi[] = [
+        "date" => $tanggal,
+        "nominal" => number_format($nominal, 0, ".", ","),
+    ];
+
+    $json_encode = json_encode($list_transaksi);
+    setcookie("list_transaksi", $json_encode, time() + 3600);
+    header("Location: tambah.php");
+    exit();
+} ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +43,7 @@
     <?php if (isset($_COOKIE["list_transaksi"])) {
         echo "<p style=\"color: red;\" >Data berhasil ditambah</p>";
     } ?>
-    <form method="post" action="proses-transaksi.php">
+    <form method="post" action="tambah.php">
         Tanggal: <input type="date" name="date"> <br> <br>
         Nominal: <input type="number" name="nominal" id=""> <br> <br>
         <input type="submit" name="submit" value="Simpan">
