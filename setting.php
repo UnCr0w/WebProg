@@ -6,7 +6,9 @@
     <title>Project WEBPROG</title>
     <style>
         a:link{color:blue;}
+        a:visited{color:blue;}
         a{text-decoration:none;}
+        body{font-family: sans-serif;}
     </style>
 </head>
 <body>
@@ -55,7 +57,7 @@
 
         <input type="submit" name="submit" value="Simpan"><br><br>
 
-        <div> <a href="index.php">&lt&lt Kembali</a> </div>
+        <div> <a href="index.php">&laquo; Kembali</a> </div>
     </form>
 </body>
 </html>

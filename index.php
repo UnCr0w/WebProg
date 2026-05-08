@@ -5,14 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Project WEBPROG</title>
         <style>
+        body{
+            font-family: sans-serif;
+        }
             a:link {
-                color: midnightblue;
+                color: blue;
                 background-color: transparent;
                 text-decoration: none;
             }
             a:hover {
                 font-weight: bold;
                 text-decoration: underline;
+            }
+            a:visited{
+                color: blue;
+                background-color: transparent;
+                text-decoration: none;
             }
         </style>
     </head>
@@ -57,7 +65,9 @@
             ";
             foreach ($list_detail_transaksi as $key => $value) {
                 echo "
-            <li>{$key} - Rp. {$value}</li>
+            <li>{$key} - Rp. " .
+                    number_format($value) .
+                    "</li>
             ";
             }
             echo "
